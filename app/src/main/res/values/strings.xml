@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">OpenSkyProject</string>
+    <string name="heading">Welcome to app, what do you want to do?</string>
+    <string name="button_show_position">Show flights around you</string>
+    <string name="button_show_flights">Show flights for specified boundaries</string>
+    <string name="button_track">Track flight</string>
+    <string name="title_activity_maps">MapsActivity</string>
+    <string name="title_activity_maps2">MapsActivity2</string>
+    <string name="title_activity_show_flights">ShowFlightsActivity</string>
+    <string name="lat_min">Enter minimum latitude (decimal)</string>
+    <string name="lat_max">Enter maximum latitude (decimal)</string>
+    <string name="long_min">Enter minimum longitude (decimal)</string>
+    <string name="long_max">Enter maximum longitude (decimal)</string>
+    <string name="button_show">Show flights for boundaries</string>
+</resources>
