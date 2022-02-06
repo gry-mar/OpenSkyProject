@@ -1,6 +1,7 @@
 package edu.ib.openskyproject;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -36,8 +37,13 @@ public class BoundariesActivity extends AppCompatActivity {
                 Log.i("LOG PASS", url);
                 intent.putExtra("passUrl",url);
                 startActivity(intent);
+
             }
         });
     }
 
+    public void returnToMain(View view) {
+        Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+        startActivity(intent);
+    }
 }

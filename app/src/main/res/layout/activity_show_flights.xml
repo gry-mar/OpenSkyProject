@@ -1,24 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ShowFlightsActivity"
     android:padding="10dp"
     android:orientation="vertical"
-    tools:context=".BoundariesActivity"
-    >
 
-    <androidx.fragment.app.FragmentContainerView
+    >
+    <fragment
         xmlns:map="http://schemas.android.com/apk/res-auto"
         android:id="@+id/googlemap"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
-        android:layout_height="300dp"/>
+        android:layout_height="400dp"/>
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:text="Return to boundaries"
+        android:onClick="returnToBounds"/>
 
-
-
-</FrameLayout>
+</LinearLayout>
 
 
 

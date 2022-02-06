@@ -30,7 +30,7 @@ public class Results {
 
     @Override
     public String toString() {
-        return "FullResults{" +
+        return "Result{" +
                 "time=" + time +
                 ", states=" + states +
                 '}';

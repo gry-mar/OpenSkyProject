@@ -7,7 +7,14 @@
     android:orientation="vertical"
     tools:context=".BoundariesActivity">
 
-
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:gravity = "center"
+        android:ems="30"
+        android:text="Enter boundaries and search flights" />
 
     <EditText
         android:id="@+id/edtLatMin"
@@ -15,7 +22,8 @@
         android:layout_height="wrap_content"
         android:hint="@string/lat_min"
         android:ems="10"
-        android:inputType="numberDecimal" />
+        android:inputType="text"
+        android:digits="0123456789-."/>
 
     <EditText
         android:id="@+id/edtLatMax"
@@ -23,7 +31,8 @@
         android:layout_height="wrap_content"
         android:hint="@string/lat_max"
         android:ems="10"
-        android:inputType="numberDecimal" />
+        android:inputType="text"
+        android:digits="0123456789-."/>
 
     <EditText
         android:id="@+id/edtLongMin"
@@ -31,7 +40,8 @@
         android:layout_height="wrap_content"
         android:hint="@string/long_min"
         android:ems="10"
-        android:inputType="numberDecimal" />
+        android:inputType="text"
+        android:digits="0123456789-." />
 
     <EditText
         android:id="@+id/edtLongMax"
@@ -39,7 +49,8 @@
         android:layout_height="wrap_content"
         android:hint="@string/long_max"
         android:ems="10"
-        android:inputType="numberDecimal" />
+        android:inputType="text"
+        android:digits="0123456789-." />
 
     <Button
         android:id="@+id/btnShow"
@@ -48,11 +59,20 @@
         android:text="@string/button_show"
         />
 
+    <Button
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Return to main screen"
+        android:onClick="returnToMain"/>
+
     <TextView
         android:id="@+id/tvError"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="" />
+
+
 
 
 </LinearLayout>
