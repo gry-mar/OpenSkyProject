@@ -27,6 +27,9 @@ public class Flights {
 
     }
 
+    public Flights() {
+    }
+
     public double getLongitude() {
         return longitude;
     }
@@ -42,7 +45,6 @@ public class Flights {
     public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
-
 
     @Override
     public String toString() {

@@ -2,7 +2,10 @@ package edu.ib.openskyproject;
 
 import androidx.fragment.app.FragmentActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
@@ -21,8 +24,14 @@ import edu.ib.openskyproject.databinding.ActivityShowFlightsBinding;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.StringReader;
+import java.lang.reflect.Array;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.Map;
 
 import javax.xml.transform.Result;
@@ -53,9 +62,61 @@ public class ShowFlightsActivity extends FragmentActivity implements OnMapReadyC
         LatLng sydney = new LatLng(0, 0);
         mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+
+        RequestQueue queue = Volley.newRequestQueue(this);
+
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        final Handler handler = new Handler();
+        final Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+
+                StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                        res -> {
+                            FullResults fullResults = gson.fromJson(res.toString(), FullResults.class);
+
+                            ArrayList<Flights> flightsArrayList = new ArrayList<>();
+                            ArrayList<ArrayList> statesList = new ArrayList<>(fullResults.getStates());
+                            ArrayList<String> countriesList = new ArrayList<>();
+                            for (int i = 0; i < statesList.size(); i++) {
+                                try {
+                                    double latitude = Double.parseDouble(statesList.get(i).get(6).toString());
+                                    double longitude = Double.parseDouble(statesList.get(i).get(5).toString());
+                                    String country = statesList.get(i).get(2).toString();
+                                    flightsArrayList.add(new Flights(longitude, latitude));
+                                    countriesList.add(country);
+                                } catch (NullPointerException e) {
+                                    e.printStackTrace();
+                                }
+
+                            }
+                            for (int i = 0; i < flightsArrayList.size(); i++) {
+                                LatLng point = new LatLng(flightsArrayList.get(i).getLatitude(),
+                                        flightsArrayList.get(i).getLongitude());
+                                MarkerOptions markerOptions = new MarkerOptions().position(point).title("Country: " +
+                                        countriesList.get(i));
+                                mMap.addMarker(markerOptions);
+
+                            }
+
+                            //System.out.println(result);
+                        }, error -> {
+                    System.out.println("Error");
+                });
+                queue.add(stringRequest);
+
+                handler.postDelayed(this::run, 5000);
+            }
+
+        };
+        handler.postDelayed(runnable, 5000);
+
+
     }
 
-    public void showClicked(View view) {
+    public void showClicked(GoogleMap googleMap){
+        mMap = googleMap;
+        Intent intent = new Intent(this,)
         EditText edtLatMin = findViewById(R.id.edtLatMin);
         EditText edtLatMax = findViewById(R.id.edtLatMax);
         EditText edtLonMin = findViewById(R.id.edtLongMin);
@@ -64,28 +125,10 @@ public class ShowFlightsActivity extends FragmentActivity implements OnMapReadyC
         double latMax = Double.parseDouble(edtLatMax.getText().toString());
         double lonMin = Double.parseDouble(edtLonMin.getText().toString());
         double lonMax = Double.parseDouble(edtLonMax.getText().toString());
-        StringBuffer response = new StringBuffer();
-        String url = "https://grymar439:Urwis1urwis1@opensky-network.org/api/states/all?lamin="+latMin+"&lomin"+lonMin+"&lamax="+
-                latMax+"&lomax"+lonMax;
-        RequestQueue queue = Volley.newRequestQueue(this);
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        StringRequest stringRequest = new StringRequest(Request.Method.GET,url,
-                res ->{
-            //Flights result = gson.fromJson(res, Flights.class);
-                    Map m = gson.fromJson(res.toString(), Map.class);
-                    String lat = m.get("states").toString();
-                    //double lon =Double.valueOf((Double) m.get("longitude"));
-                    System.out.println(lat);
-                    for(Object key : m.keySet()){
-                        System.out.println("Key"+key);
-                    }
-                    //System.out.println(result);
-        }, error -> {
-        });
-        queue.add(stringRequest);
 
-        //S/ystem.out.println(m);
-
+        String url = "https://opensky-network.org/api/states/all?lamin=" + String.valueOf(latMin) + "&lomin" + String.valueOf(lonMin) + "&lamax=" +
+                latMax + "&lomax" + lonMax;
+        Log.i("LOG PASS", url);
 
     }
-    }
+}
