@@ -1,17 +1,26 @@
 package edu.ib.openskyproject;
 
+import static android.location.LocationManager.*;
+
+import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
+import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
@@ -23,17 +32,25 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.net.PlacesClient;
 
 import edu.ib.openskyproject.databinding.ActivityMapsBinding;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MapsActivity extends FragmentActivity {
 
     private GoogleMap mMap;
-    private ActivityMapsBinding binding;
-    Location mLastLocation;
-    Marker mCurrLocationMarker;
-    GoogleApiClient mGoogleApiClient;
-    LocationRequest mLocationRequest;
+
+    SupportMapFragment supportMapFragment;
+
+    private FusedLocationProviderClient fusedLocationProviderClient;
+    String provider;
+    LatLng latLng;
+    protected String latitude, longitude;
+    protected boolean gps_enabled, network_enabled;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,38 +59,83 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 //        binding = ActivityMaps2Binding.inflate(getLayoutInflater());
 //        setContentView(binding.getRoot());
 
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+        supportMapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
-        mapFragment.getMapAsync(this);
+            getCurrentLocation();
+
+
+
     }
+
+    private void getCurrentLocation() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
+        }else{
+        Task<Location> task = fusedLocationProviderClient.getLastLocation();
+        task.addOnSuccessListener(new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(Location location) {
+                if(location != null){
+                    supportMapFragment.getMapAsync(new OnMapReadyCallback() {
+                        private LatLng latLng;
+
+                        @Override
+                        public void onMapReady(GoogleMap googleMap) {
+                            this.latLng = new LatLng(location.getLatitude(),location.getLongitude());
+
+                            MarkerOptions options = new MarkerOptions().position(latLng)
+                                    .title("You are here");
+                            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,20));
+                            googleMap.addMarker(options);
+                        }
+                    });
+            }
+        }
+    });
+    }}
 
     @Override
-    public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(requestCode ==44){
+            if(grantResults.length>0 &&grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                getCurrentLocation();
+            }
+        }
+    }
 
-        // Add a marker in Sydney and move the camera
-        String url = "Opensky";
-        LatLng Pwr = new LatLng(51.110650, 17.058135);
+    public void returnMain(View view) {
+        Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+        startActivity(intent);
+    }
 
-        mMap.addMarker(new MarkerOptions().position(Pwr).title("You are here"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(Pwr));
-//        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-//            // TODO: Consider calling
-//            //    ActivityCompat#requestPermissions
-//            // here to request the missing permissions, and then overriding
-//            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-//            //                                          int[] grantResults)
-//            // to handle the case where the user grants the permission. See the documentation
-//            // for ActivityCompat#requestPermissions for more details.
+    //    @Override
+//    public void onMapReady(GoogleMap googleMap) {
+//        mMap = googleMap;
+//
+//        // Add a marker in Sydney and move the camera
+//        String url = "Opensky";
+//        LatLng Pwr = new LatLng(51.110650, 17.058135);
+//        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+//        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+//            getCurrentLocation();
 //            return;
 //        }
-//        mMap.setMyLocationEnabled(true);
-//        mMap.setOnMyLocationButtonClickListener(this);
-//        mMap.setOnMyLocationClickListener(this);
-
-        //}
-
-    }
+//        locationManager.requestLocationUpdates(GPS_PROVIDER, 0, 0, (android.location.LocationListener) this);
+//
+//        mMap.addMarker(new MarkerOptions().position(Pwr).title("You are here"));
+//        mMap.moveCamera(CameraUpdateFactory.newLatLng(Pwr));
+//
+//
+//    }
+//    private void getCurrentLocation
+//
+//    @Override
+//    public void onLocationChanged(@NonNull Location location) {
+//
+//    }
 
 }
