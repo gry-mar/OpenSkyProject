@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showFlightsClicked(View view) {
-        Intent intent = new Intent(this, ShowFlightsActivity.class);
+        Intent intent = new Intent(this, BoundariesActivity.class);
         startActivity(intent);
 
 

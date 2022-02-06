@@ -1,66 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:padding="10dp"
     android:orientation="vertical"
-    tools:context=".ShowFlightsActivity">
+    tools:context=".BoundariesActivity"
+    >
 
-    <fragment
+    <androidx.fragment.app.FragmentContainerView
         xmlns:map="http://schemas.android.com/apk/res-auto"
         android:id="@+id/googlemap"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="300dp"/>
 
-    <EditText
-        android:id="@+id/edtLatMin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/lat_min"
-        android:ems="10"
-        android:inputType="numberDecimal" />
-
-    <EditText
-        android:id="@+id/edtLatMax"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/lat_max"
-        android:ems="10"
-        android:inputType="numberDecimal" />
-
-    <EditText
-        android:id="@+id/edtLongMin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/long_min"
-        android:ems="10"
-        android:inputType="numberDecimal" />
-
-    <EditText
-        android:id="@+id/edtLongMax"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/long_max"
-        android:ems="10"
-        android:inputType="numberDecimal" />
-
-    <Button
-        android:id="@+id/btnShow"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/button_show"
-        android:onClick="showClicked"/>
-
-    <TextView
-        android:id="@+id/tvError"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="" />
 
 
-</LinearLayout>
+
+</FrameLayout>
 
 
 

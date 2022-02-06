@@ -2,12 +2,12 @@ package edu.ib.openskyproject;
 
 import java.util.ArrayList;
 
-public class FullResults {
+public class Results {
 
     protected int time;
     protected ArrayList<ArrayList> states;
 
-    public FullResults(int time, ArrayList<ArrayList> states) {
+    public Results(int time, ArrayList<ArrayList> states) {
         this.time = time;
         this.states = states;
     }
