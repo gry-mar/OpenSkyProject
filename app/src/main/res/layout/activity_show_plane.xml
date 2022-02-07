@@ -2,36 +2,33 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    :android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    tools:context=".DealWithLocationActivity">
-
+    tools:context=".ShowPlaneActivity"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal">
 
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Show plane" />
+
         <EditText
-            android:id="@+id/edtDistance"
+            android:id="@+id/editTextTextPersonName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
-            android:hint="Enter distance (km)"
-            android:inputType="numberDecimal"
-             />
-
-        <Button
-            android:id="@+id/btnChooseDistance"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Choose distance"
-            />
-
-
+            android:gravity="center"
+            android:hint="Enter icao24 number"
+            android:inputType="textPersonName" />
     </LinearLayout>
 
     <LinearLayout
@@ -40,23 +37,22 @@
         android:orientation="vertical">
 
         <Button
-            android:id="@+id/btnReturnToMain"
+            android:id="@+id/btnGoToMain"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Return to main"
-            android:onClick="returnMain"/>
+            android:text="Return to main" />
 
         <TextView
-            android:id="@+id/tvErrorLocation"
+            android:id="@+id/tvError"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
              />
 
         <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/fragmentContainerMap"
-            android:name="edu.ib.openskyproject.MapsFragment"
+            android:id="@+id/fragmentContainerView"
+            android:name="edu.ib.openskyproject.ShowPlaneMapFragment"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
 </LinearLayout>

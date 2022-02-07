@@ -3,8 +3,10 @@ package edu.ib.openskyproject;
 import java.util.List;
 
 public class Flights {
-//    private int time;
-//    private String icao24;
+
+
+    //    private int time;
+  private String icao24;
 //    private String callsign;
 //    /protected String originCountry;
     //protected int timePosition;
@@ -27,9 +29,21 @@ public class Flights {
 
     }
 
-    public Flights() {
+    public Flights(String icao24, double longitude, double latitude) {
+        this.icao24 = icao24;
+        this.longitude = longitude;
+        this.latitude = latitude;
     }
 
+    public Flights() {
+    }
+    public String getIcao24() {
+        return icao24;
+    }
+
+    public void setIcao24(String icao24) {
+        this.icao24 = icao24;
+    }
     public double getLongitude() {
         return longitude;
     }

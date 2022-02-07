@@ -9,6 +9,7 @@ import androidx.navigation.Navigation;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -68,7 +69,8 @@ public class DealWithLocationActivity extends AppCompatActivity {
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
         //locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        if (ActivityCompat.checkSelfPermission(DealWithLocationActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(DealWithLocationActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(DealWithLocationActivity.this,
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
         }
@@ -109,7 +111,7 @@ public class DealWithLocationActivity extends AppCompatActivity {
         }else{
             double r = distance % oneDegreeVal;
             double d = (distance - r)/111;
-            double m = r/oneMinVal;
+            double m = (r/oneMinVal)/60;
             return d+m;
         }
     }
@@ -149,6 +151,7 @@ public class DealWithLocationActivity extends AppCompatActivity {
         String url = "https://opensky-network.org/api/states/all?lamin=" + (getLatitude()-decimalDeg) + "&lomin=" + (getLongitude()-decimalDeg) + "&lamax=" +
                 (getLatitude()+decimalDeg) + "&lomax=" + (getLongitude()+decimalDeg);
         System.out.println(url);
+        System.out.println(decimalDeg);
         Bundle bundle = new Bundle();
         bundle.putString("url",url);
         MapsFragment mapsFragment = new MapsFragment();
@@ -164,4 +167,9 @@ public class DealWithLocationActivity extends AppCompatActivity {
 //                .commit();
     }
 
+    public void returnMain(View view) {
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+    }
 }

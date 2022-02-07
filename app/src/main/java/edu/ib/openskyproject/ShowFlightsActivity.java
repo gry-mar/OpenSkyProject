@@ -45,9 +45,8 @@ public class ShowFlightsActivity extends FragmentActivity implements OnMapReadyC
                 .findFragmentById(R.id.googlemap);
 
         mapFragment.getMapAsync(this);
-        if(savedInstanceState!=null){
-        isReady = savedInstanceState.getBoolean("isReady");}
-        isReady = false;
+
+
 
     }
 
@@ -110,11 +109,7 @@ public class ShowFlightsActivity extends FragmentActivity implements OnMapReadyC
             handler.postDelayed(runnable, 5000);
         }
 
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle savedInstanceState){
-        super.onSaveInstanceState(savedInstanceState);
-        savedInstanceState.putBoolean("isReady",isReady);
-    }
+
 
 
     public void returnToBounds(View view) {
