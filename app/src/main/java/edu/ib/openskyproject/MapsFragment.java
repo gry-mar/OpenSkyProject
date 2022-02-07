@@ -124,7 +124,9 @@ public class MapsFragment extends Fragment {
 
         View view =  inflater.inflate(R.layout.fragment_maps, container, false);
         if(b!=null){
+
         setUrl(b.getString("url"));}
+
 
 return view;
     }
