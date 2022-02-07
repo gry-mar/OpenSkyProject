@@ -5,45 +5,86 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import java.util.ArrayList;
 
 public class ShowPlaneMapFragment extends Fragment {
 
+    protected String url;
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
 
-        /**
-         * Manipulates the map once available.
-         * This callback is triggered when the map is ready to be used.
-         * This is where we can add markers or lines, add listeners or move the camera.
-         * In this case, we just add a marker near Sydney, Australia.
-         * If Google Play services is not  m      installed on the device, the user will be prompted to
-         * install it inside the SupportMapFragment. This method will only be triggered once the
-         * user has installed Google Play services and returned to the app.
-         */
         @Override
         public void onMapReady(GoogleMap googleMap) {
-            LatLng sydney = new LatLng(-34, 151);
-            googleMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-            googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
 
+            RequestQueue queue = Volley.newRequestQueue(getActivity());
+            String url = getUrl();
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            final Handler handler = new Handler();
+            final Runnable runnable = new Runnable() {
+                @Override
+                public void run() {
+                    StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                            res -> {
+                                Result2 results = gson.fromJson(res.toString(), Result2.class);
+
+                                try {
+                                    ArrayList<ArrayList> path = results.getPath();
+                                    double latitude = Double.parseDouble(String.valueOf(path.get(0).get(1)));
+                                    double longtitude = Double.parseDouble(String.valueOf(path.get(0).get(2)));
+                                    LatLng point = new LatLng(latitude, longtitude);
+                                    MarkerOptions markerOptions = new MarkerOptions().position(point);
+                                    googleMap.addMarker(markerOptions);
+                                } catch (NullPointerException e) {
+                                    e.printStackTrace();
+                                }
+
+                            }, error -> {
+                        LatLng pointPWR = new LatLng(51.1052862455, 17.055921443);
+                        MarkerOptions moPWR = new MarkerOptions().position(pointPWR).title("Aplikacja działa jak PWR, czyli nie działa");
+                        googleMap.addMarker(moPWR);
+                    });
+                    queue.add(stringRequest);
+                    handler.postDelayed(this, 5000);
+                }
+            };
+            handler.postDelayed(runnable, 5000);
         }
     };
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_show_plane_map, container, false);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        Bundle bundle = new Bundle();
+        View view = inflater.inflate(R.layout.fragment_show_plane_map, container, false);
+        if (bundle != null) {
+            setUrl(bundle.getString("url"));
+        }
+        return view;
     }
 
     @Override
