@@ -20,7 +20,7 @@
             android:layout_weight="1"
             android:onClick="showPlayCLicked"
             android:text="@string/show_plane"
-            tools:ignore="OnClick" />
+            tools:ignore="OnClick"/>
 
 
         <EditText
@@ -31,7 +31,7 @@
             android:ems="10"
             android:gravity="center"
             android:hint="@string/enter_icao24_number"
-            android:inputType="textPersonName" />
+            android:inputType="text" />
     </LinearLayout>
 
     <LinearLayout
@@ -45,7 +45,7 @@
             android:layout_height="wrap_content"
             android:onClick="btnReturnToMain"
             android:text="@string/return_to_main"
-            tools:ignore="OnClick" />
+             />
 
         <TextView
             android:id="@+id/tvError"

@@ -83,7 +83,7 @@ public class MapsFragment extends Fragment {
                                 for (int i = 0; i < flightsArrayList.size(); i++) {
                                     LatLng point = new LatLng(flightsArrayList.get(i).getLatitude(),
                                             flightsArrayList.get(i).getLongitude());
-                                    MarkerOptions markerOptions = new MarkerOptions().position(point).title("Country: " +
+                                    MarkerOptions markerOptions = new MarkerOptions().position(point).title("Origin country: " +
                                             countriesList.get(i));
                                     googleMap.addMarker(markerOptions);
 
@@ -113,8 +113,7 @@ public class MapsFragment extends Fragment {
 
         View view =  inflater.inflate(R.layout.fragment_maps, container, false);
         if(b!=null){
-
-        setUrl(b.getString("url"));}
+            setUrl(b.getString("url"));}
 
 
 return view;

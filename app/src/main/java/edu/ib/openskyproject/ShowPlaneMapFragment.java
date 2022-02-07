@@ -41,6 +41,7 @@ public class ShowPlaneMapFragment extends Fragment {
 
             RequestQueue queue = Volley.newRequestQueue(getActivity());
             String url = getUrl();
+            System.out.println(url);
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
             final Handler handler = new Handler();
             final Runnable runnable = new Runnable() {
@@ -48,23 +49,24 @@ public class ShowPlaneMapFragment extends Fragment {
                 public void run() {
                     StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                             res -> {
-                                Result2 results = gson.fromJson(res.toString(), Result2.class);
+                                Results results = gson.fromJson(res.toString(), Results.class);
 
-                                try {
-                                    ArrayList<ArrayList> path = results.getPath();
-                                    double latitude = Double.parseDouble(String.valueOf(path.get(0).get(1)));
-                                    double longtitude = Double.parseDouble(String.valueOf(path.get(0).get(2)));
+                               // try {
+                                    ArrayList<ArrayList> path = results.getStates();
+                                    double latitude = Double.parseDouble(String.valueOf(path.get(0).get(6)));
+                                    double longtitude = Double.parseDouble(String.valueOf(path.get(0).get(5)));
                                     LatLng point = new LatLng(latitude, longtitude);
+                                    System.out.println(longtitude);
+                                    System.out.println(latitude);
                                     MarkerOptions markerOptions = new MarkerOptions().position(point);
                                     googleMap.addMarker(markerOptions);
-                                } catch (NullPointerException e) {
-                                    e.printStackTrace();
-                                }
+                              //
 
                             }, error -> {
-                        LatLng pointPWR = new LatLng(51.1052862455, 17.055921443);
-                        MarkerOptions moPWR = new MarkerOptions().position(pointPWR).title("Aplikacja działa jak PWR, czyli nie działa");
-                        googleMap.addMarker(moPWR);
+                        System.out.println("error");
+//                        LatLng pointPWR = new LatLng(51.1052862455, 17.055921443);
+//                        MarkerOptions moPWR = new MarkerOptions().position(pointPWR).title("Aplikacja działa jak PWR, czyli nie działa");
+//                        googleMap.addMarker(moPWR);
                     });
                     queue.add(stringRequest);
                     handler.postDelayed(this, 5000);
@@ -77,10 +79,10 @@ public class ShowPlaneMapFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        Bundle bundle = new Bundle();
+        Bundle bundle = getArguments();
         View view = inflater.inflate(R.layout.fragment_show_plane_map, container, false);
         if (bundle != null) {
-            setUrl(bundle.getString("url"));
+            setUrl(bundle.getString("plane_url"));
         }
         return view;
     }

@@ -21,9 +21,9 @@ public class ShowPlaneActivity extends AppCompatActivity {
         EditText icao24 = findViewById(R.id.edtIcao24);
         String icao = icao24.getText().toString();
 
-        String url = "https://grymar439:Urwis1urwis1@opensky-network.org/api/tracks/all?icao24=" + icao + "&time=0";
+        String url = "https://opensky-network.org/api/states/all?icao24=" + icao;
         Bundle bundle = new Bundle();
-        bundle.putString("url",url);
+        bundle.putString("plane_url",url);
 
         ShowPlaneMapFragment spmf = new ShowPlaneMapFragment();
         spmf.setArguments(bundle);

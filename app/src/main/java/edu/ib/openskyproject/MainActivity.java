@@ -32,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void trackFlightsClicked(View view) {
-        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        Intent intent = new Intent(this, ShowPlaneActivity.class);
+        startActivity(intent);
+
     }
 }
