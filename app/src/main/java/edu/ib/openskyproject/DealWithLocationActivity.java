@@ -102,6 +102,7 @@ public class DealWithLocationActivity extends AppCompatActivity {
     }
 
     private double distanceToLatAndLong(double distance){
+
         int oneDegreeVal = 111;
         int oneMinVal = 2;
         if(distance % oneDegreeVal ==0){
