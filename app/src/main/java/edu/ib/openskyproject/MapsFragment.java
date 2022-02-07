@@ -86,6 +86,7 @@ public class MapsFragment extends Fragment {
                                         String country = statesList.get(i).get(2).toString();
                                         flightsArrayList.add(new Flights(longitude, latitude));
                                         System.out.println("djwielki chuj");
+                                        System.out.println("jo");
                                         countriesList.add(country);
                                     } catch (NullPointerException e) {
                                         e.printStackTrace();
