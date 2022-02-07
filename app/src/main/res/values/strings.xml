@@ -14,4 +14,9 @@
     <string name="button_show">Show flights for boundaries</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="enter_icao24_number">Enter icao24 number</string>
+    <string name="show_plane">Show plane</string>
+    <string name="return_to_main">Return to main</string>
+    <string name="return_to_boundaries">Return to boundaries</string>
+    <string name="textview">TextView</string>
 </resources>
