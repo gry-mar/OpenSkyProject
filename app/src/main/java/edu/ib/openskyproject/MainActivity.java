@@ -25,12 +25,13 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void showArea(View view) {
-        Intent intent = new Intent(this, MapsActivity.class);
+        Intent intent = new Intent(this, DealWithLocationActivity.class);
         startActivity(intent);
     }
 
 
 
     public void trackFlightsClicked(View view) {
+
     }
 }
