@@ -70,7 +70,7 @@ public class ShowFlightsActivity extends FragmentActivity implements OnMapReadyC
                     StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                             res -> {
                                 Results results = gson.fromJson(res.toString(), Results.class);
-
+                            try {
                                 ArrayList<Flights> flightsArrayList = new ArrayList<>();
                                 ArrayList<ArrayList> statesList = new ArrayList<>();
                                 statesList.addAll(results.getStates());
@@ -90,18 +90,20 @@ public class ShowFlightsActivity extends FragmentActivity implements OnMapReadyC
                                 for (int i = 0; i < flightsArrayList.size(); i++) {
                                     LatLng point = new LatLng(flightsArrayList.get(i).getLatitude(),
                                             flightsArrayList.get(i).getLongitude());
-                                    MarkerOptions markerOptions = new MarkerOptions().position(point).title("Country: " +
+                                    MarkerOptions markerOptions = new MarkerOptions().position(point).title("Origin country: " +
                                             countriesList.get(i));
                                     mMap.addMarker(markerOptions);
 
                                 }
 
                                 //System.out.println(result);
+                            }catch(Exception e){
+                                LatLng pointPWR = new LatLng(51.1052862455, 17.055921443);
+                                MarkerOptions moPWR = new MarkerOptions().position(pointPWR).title("No flights for that bounds but enjoy PWR :)");
+                                googleMap.addMarker(moPWR); }
                             }, error -> {
                         System.out.println("Error");
-                        LatLng pointPWR = new LatLng(51.1052862455, 17.055921443);
-                        MarkerOptions moPWR = new MarkerOptions().position(pointPWR).title("Aplikacja działa jak PWR, czyli nie działa");
-                        googleMap.addMarker(moPWR);
+
                     });
                     queue.add(stringRequest);
 

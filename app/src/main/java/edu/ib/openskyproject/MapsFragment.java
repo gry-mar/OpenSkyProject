@@ -64,36 +64,35 @@ public class MapsFragment extends Fragment {
                     StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                             res -> {
                                 Results results = gson.fromJson(res.toString(), Results.class);
-                                if (results != null){
+                                try {
                                     ArrayList<Flights> flightsArrayList = new ArrayList<>();
                                 ArrayList<ArrayList> statesList = new ArrayList<>();
                                 statesList.addAll(results.getStates());
                                 ArrayList<String> countriesList = new ArrayList<>();
                                 for (int i = 0; i < statesList.size(); i++) {
-                                    try {
+
                                         double latitude = Double.parseDouble(statesList.get(i).get(6).toString());
                                         double longitude = Double.parseDouble(statesList.get(i).get(5).toString());
                                         String country = statesList.get(i).get(2).toString();
                                         flightsArrayList.add(new Flights(longitude, latitude));
                                         countriesList.add(country);
-                                    } catch (NullPointerException e) {
-                                        e.printStackTrace();
+
                                     }
+                                    for (int i = 0; i < flightsArrayList.size(); i++) {
+                                        LatLng point = new LatLng(flightsArrayList.get(i).getLatitude(),
+                                                flightsArrayList.get(i).getLongitude());
+                                        MarkerOptions markerOptions = new MarkerOptions().position(point).title("Origin country: " +
+                                                countriesList.get(i));
+                                        googleMap.addMarker(markerOptions);
 
-                                }
-                                for (int i = 0; i < flightsArrayList.size(); i++) {
-                                    LatLng point = new LatLng(flightsArrayList.get(i).getLatitude(),
-                                            flightsArrayList.get(i).getLongitude());
-                                    MarkerOptions markerOptions = new MarkerOptions().position(point).title("Origin country: " +
-                                            countriesList.get(i));
-                                    googleMap.addMarker(markerOptions);
-
-                                }
-                            }else{
+                                    }
+                                } catch (Exception e) {
+                                        e.printStackTrace();
                                     LatLng pointPWR = new LatLng(51.1052862455, 17.055921443);
                                     MarkerOptions moPWR = new MarkerOptions().position(pointPWR).title("Nie ma lotów ale masz tu PWR");
                                     googleMap.addMarker(moPWR);
-                        }
+                                    }
+
 
                                 //System.out.println(result);
                             }, error -> {

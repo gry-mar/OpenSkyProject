@@ -51,22 +51,23 @@ public class ShowPlaneMapFragment extends Fragment {
                             res -> {
                                 Results results = gson.fromJson(res.toString(), Results.class);
 
-                               // try {
-                                    ArrayList<ArrayList> path = results.getStates();
-                                    double latitude = Double.parseDouble(String.valueOf(path.get(0).get(6)));
-                                    double longtitude = Double.parseDouble(String.valueOf(path.get(0).get(5)));
-                                    LatLng point = new LatLng(latitude, longtitude);
-                                    System.out.println(longtitude);
-                                    System.out.println(latitude);
-                                    MarkerOptions markerOptions = new MarkerOptions().position(point);
-                                    googleMap.addMarker(markerOptions);
-                              //
-
+                               try {
+                                   ArrayList<ArrayList> path = results.getStates();
+                                   double latitude = Double.parseDouble(String.valueOf(path.get(0).get(6)));
+                                   double longtitude = Double.parseDouble(String.valueOf(path.get(0).get(5)));
+                                   LatLng point = new LatLng(latitude, longtitude);
+                                   System.out.println(longtitude);
+                                   System.out.println(latitude);
+                                   MarkerOptions markerOptions = new MarkerOptions().position(point);
+                                   googleMap.addMarker(markerOptions);
+                               }catch(Exception e){
+                                   LatLng pointPWR = new LatLng(51.1052862455, 17.055921443);
+                                   MarkerOptions moPWR = new MarkerOptions().position(pointPWR).title("Nie ma takiego lotu ale masz tu PWR");
+                                   googleMap.addMarker(moPWR);
+                               }
                             }, error -> {
                         System.out.println("error");
-                        LatLng pointPWR = new LatLng(51.1052862455, 17.055921443);
-                        MarkerOptions moPWR = new MarkerOptions().position(pointPWR).title("Aplikacja działa jak PWR, czyli nie działa");
-                        googleMap.addMarker(moPWR);
+
                     });
                     queue.add(stringRequest);
                     handler.postDelayed(this, 5000);
