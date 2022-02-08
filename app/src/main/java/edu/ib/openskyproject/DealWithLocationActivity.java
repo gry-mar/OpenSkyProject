@@ -78,17 +78,18 @@ public class DealWithLocationActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<Location> task) {
                 Location location = task.getResult();
-                if(location!=null){
-                    try{
-                    Geocoder geocoder = new Geocoder(DealWithLocationActivity.this,
-                            Locale.getDefault());
-                    List<Address> addresses = geocoder.getFromLocation(
-                            location.getLatitude(),location.getLongitude(),1
-                    );
-                    setLatitude(addresses.get(0).getLatitude());
-                    setLongitude(addresses.get(0).getLongitude());
-                    }
-                    catch(IOException e){
+                if (location != null) {
+                    try {
+                        Geocoder geocoder = new Geocoder(DealWithLocationActivity.this,
+                                Locale.getDefault());
+                        List<Address> addresses = geocoder.getFromLocation(
+                                location.getLatitude(), location.getLongitude(), 1
+                        );
+                        setLatitude(addresses.get(0).getLatitude());
+                        setLongitude(addresses.get(0).getLongitude());
+                        System.out.println(addresses.get(0).getLatitude());
+                        System.out.println(addresses.get(0).getLongitude());
+                    } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
@@ -97,25 +98,42 @@ public class DealWithLocationActivity extends AppCompatActivity {
 //        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, LOCATION_REFRESH_TIME,
 //                LOCATION_REFRESH_DISTANCE, mLocationListener);
         Button btnDistance = findViewById(R.id.btnChooseDistance);
-        btnDistance.setOnClickListener(viev -> {
-           mapDisplay(viev);
-            }
-        );
+        btnDistance.setOnClickListener(this::mapDisplay);
     }
 
-    private double distanceToLatAndLong(double distance){
+    private double degreeOfLat(double distance) {
 
         int oneDegreeVal = 111;
-        int oneMinVal = 2;
-        if(distance % oneDegreeVal ==0){
-            return distance/oneDegreeVal;
-        }else{
-            double r = distance % oneDegreeVal;
-            double d = (distance - r)/111;
-            double m = (r/oneMinVal)/60;
-            return d+m;
+        double oneMinLat = 1.85;
+
+        if (distance % oneDegreeVal == 0) {
+            return distance / oneDegreeVal;
+        } else {
+            double r = distance % (double) oneDegreeVal;
+            double d = (distance - r) / 111;
+            double m = (r / oneMinLat) / 60;
+            return d + m;
         }
     }
+
+    public static double degreeOfLon(double distance, double degree) {
+
+        int oneDegreeVal = 111;
+        double oneMinLat = 1.85;
+
+        if (distance % oneDegreeVal == 0) {
+            return (distance / oneDegreeVal) * Math.cos(Math.toRadians(degree));
+        } else {
+            double r = distance % (double) oneDegreeVal;
+            double d = (distance - r) / 111;
+            double m = (r / oneMinLat) / 60;
+            return (d + m) * Math.cos(Math.toRadians(degree));
+        }
+    }
+
+    //private double distanceToLatAndLong(double distance){
+
+
 //    private final LocationListener mLocationListener = new LocationListener() {
 //        @Override
 //        public void onLocationChanged(final Location location) {
@@ -145,21 +163,22 @@ public class DealWithLocationActivity extends AppCompatActivity {
 //        Log.d("Latitude","status");
 //    }
 
-    private void mapDisplay(View view){
+    private void mapDisplay(View view) {
         EditText distanceText = findViewById(R.id.edtDistance);
         double distance = Double.parseDouble(distanceText.getText().toString());
-        double decimalDeg = distanceToLatAndLong(distance);
-        String url = "https://opensky-network.org/api/states/all?lamin=" + (getLatitude()-decimalDeg) + "&lomin=" + (getLongitude()-decimalDeg) + "&lamax=" +
-                (getLatitude()+decimalDeg) + "&lomax=" + (getLongitude()+decimalDeg);
-        System.out.println(url);
-        System.out.println(decimalDeg);
+        double decimalDegLat = degreeOfLat(distance);
+        double decimalDegLon = degreeOfLon(distance, decimalDegLat);
+        String url = "https://opensky-network.org/api/states/all?lamin=" + (getLatitude() - decimalDegLat)
+                + "&lomin=" + (getLongitude() - decimalDegLon) + "&lamax=" +
+                (getLatitude() + decimalDegLat) + "&lomax=" + (getLongitude() + decimalDegLon);
+
         Bundle bundle = new Bundle();
-        bundle.putString("url",url);
+        bundle.putString("url", url);
         MapsFragment mapsFragment = new MapsFragment();
         mapsFragment.setArguments(bundle);
         System.out.println(getLongitude());
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.fragmentContainerMap,mapsFragment).commit();
+        fragmentManager.beginTransaction().replace(R.id.fragmentContainerMap, mapsFragment).commit();
 
 //        fragmentManager.beginTransaction()
 //                .replace(R.id.fragmentContainerMap, MapsFragment.class, bundle, "tag")
