@@ -64,9 +64,9 @@ public class ShowPlaneMapFragment extends Fragment {
 
                             }, error -> {
                         System.out.println("error");
-//                        LatLng pointPWR = new LatLng(51.1052862455, 17.055921443);
-//                        MarkerOptions moPWR = new MarkerOptions().position(pointPWR).title("Aplikacja działa jak PWR, czyli nie działa");
-//                        googleMap.addMarker(moPWR);
+                        LatLng pointPWR = new LatLng(51.1052862455, 17.055921443);
+                        MarkerOptions moPWR = new MarkerOptions().position(pointPWR).title("Aplikacja działa jak PWR, czyli nie działa");
+                        googleMap.addMarker(moPWR);
                     });
                     queue.add(stringRequest);
                     handler.postDelayed(this, 5000);

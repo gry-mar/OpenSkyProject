@@ -99,6 +99,9 @@ public class ShowFlightsActivity extends FragmentActivity implements OnMapReadyC
                                 //System.out.println(result);
                             }, error -> {
                         System.out.println("Error");
+                        LatLng pointPWR = new LatLng(51.1052862455, 17.055921443);
+                        MarkerOptions moPWR = new MarkerOptions().position(pointPWR).title("Aplikacja działa jak PWR, czyli nie działa");
+                        googleMap.addMarker(moPWR);
                     });
                     queue.add(stringRequest);
 

@@ -59,12 +59,13 @@ public class MapsFragment extends Fragment {
             final Runnable runnable = new Runnable() {
                 @Override
                 public void run() {
+                    try{
 
                     StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                             res -> {
                                 Results results = gson.fromJson(res.toString(), Results.class);
-
-                                ArrayList<Flights> flightsArrayList = new ArrayList<>();
+                                if (results != null){
+                                    ArrayList<Flights> flightsArrayList = new ArrayList<>();
                                 ArrayList<ArrayList> statesList = new ArrayList<>();
                                 statesList.addAll(results.getStates());
                                 ArrayList<String> countriesList = new ArrayList<>();
@@ -88,13 +89,23 @@ public class MapsFragment extends Fragment {
                                     googleMap.addMarker(markerOptions);
 
                                 }
+                            }else{
+                                    LatLng pointPWR = new LatLng(51.1052862455, 17.055921443);
+                                    MarkerOptions moPWR = new MarkerOptions().position(pointPWR).title("Nie ma lotów ale masz tu PWR");
+                                    googleMap.addMarker(moPWR);
+                        }
 
                                 //System.out.println(result);
                             }, error -> {
                         System.out.println("Error");
+
                     });
                     queue.add(stringRequest);
                     handler.postDelayed(this::run, 5000);
+
+                }catch(Exception exception){
+                        exception.printStackTrace();
+                    }
 
                 }
 
