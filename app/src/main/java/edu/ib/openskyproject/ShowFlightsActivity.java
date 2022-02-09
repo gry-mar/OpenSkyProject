@@ -1,20 +1,10 @@
 package edu.ib.openskyproject;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
-
-import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
@@ -25,31 +15,28 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
 import java.util.ArrayList;
+
+/**
+ * Class which
+ */
+
 
 public class ShowFlightsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-    private boolean isReady;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_flights);
-        
-
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.googlemap);
 
         mapFragment.getMapAsync(this);
-
-
-
     }
 
 
@@ -59,16 +46,12 @@ public class ShowFlightsActivity extends FragmentActivity implements OnMapReadyC
 
         mMap = googleMap;
        String url = (String) getIntent().getStringExtra("passUrl");
-
-
             RequestQueue queue = Volley.newRequestQueue(this);
-
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
             final Handler handler = new Handler();
             final Runnable runnable = new Runnable() {
                 @Override
                 public void run() {
-
                     StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                             res -> {
                                 Results results = gson.fromJson(res.toString(), Results.class);
@@ -87,7 +70,6 @@ public class ShowFlightsActivity extends FragmentActivity implements OnMapReadyC
                                     } catch (NullPointerException e) {
                                         e.printStackTrace();
                                     }
-
                                 }
                                 for (int i = 0; i < flightsArrayList.size(); i++) {
                                     LatLng point = new LatLng(flightsArrayList.get(i).getLatitude(),
@@ -95,9 +77,7 @@ public class ShowFlightsActivity extends FragmentActivity implements OnMapReadyC
                                     MarkerOptions markerOptions = new MarkerOptions().position(point).title("Origin country: " +
                                             countriesList.get(i)).icon(BitmapDescriptorFactory.fromResource(R.drawable.plane_icon));
                                     mMap.addMarker(markerOptions);
-
                                 }
-
                             }catch(Exception e){
                                 LatLng pointPWR = new LatLng(51.1052862455, 17.055921443);
                                 MarkerOptions moPWR = new MarkerOptions().position(pointPWR).title("No flights for that bounds but enjoy PWR :)")
@@ -105,18 +85,13 @@ public class ShowFlightsActivity extends FragmentActivity implements OnMapReadyC
                                 googleMap.addMarker(moPWR); }
                             }, error -> {
                         System.out.println("Error");
-
                     });
                     queue.add(stringRequest);
-
-                    handler.postDelayed(this::run, 5000);
+                    handler.postDelayed(this, 5000);
                 }
-
             };
             handler.postDelayed(runnable, 5000);
         }
-
-
 
 
     public void returnToBounds(View view) {
