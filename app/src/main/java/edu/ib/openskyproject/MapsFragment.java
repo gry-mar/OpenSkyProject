@@ -38,8 +38,7 @@ import java.util.ArrayList;
 
 public class MapsFragment extends Fragment {
 
-    //SupportMapFragment supportMapFragment;
-    //private FusedLocationProviderClient fusedLocationProviderClient;
+
     protected String url;
 
     public String getUrl() {

@@ -96,6 +96,11 @@ public class DealWithLocationActivity extends AppCompatActivity {
         btnDistance.setOnClickListener(this::mapDisplay);
     }
 
+    /**
+     * Method that converts distnace (km) to latitude
+     * @param distance double val
+     * @return double latitude in decimal degrees
+     */
     private double degreeOfLat(double distance) {
 
         int oneDegreeVal = 111;
@@ -111,6 +116,12 @@ public class DealWithLocationActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Method that converts distance (km) to longitude in decimal degrees
+     * @param distance double val
+     * @param degree latitude decimal degree
+     * @return double longitude
+     */
     public static double degreeOfLon(double distance, double degree) {
 
         int oneDegreeVal = 111;
@@ -151,6 +162,10 @@ public class DealWithLocationActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Method that switches window to main screen when button Return to main clicked
+     * @param view
+     */
     public void returnMain(View view) {
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
