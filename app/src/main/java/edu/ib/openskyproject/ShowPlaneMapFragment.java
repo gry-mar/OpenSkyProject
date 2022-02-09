@@ -46,11 +46,13 @@ public class ShowPlaneMapFragment extends Fragment {
 
 
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
+
         /**
          * method called when map is ready
          * places appropriate icons on map
          * @param googleMap
          */
+
         @Override
         public void onMapReady(GoogleMap googleMap) {
 

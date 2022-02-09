@@ -39,7 +39,11 @@ public class ShowFlightsActivity extends FragmentActivity implements OnMapReadyC
         mapFragment.getMapAsync(this);
     }
 
-
+    /**
+     * method called when map is ready
+     * places appropriate icons on map
+     * @param googleMap
+     */
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -93,6 +97,11 @@ public class ShowFlightsActivity extends FragmentActivity implements OnMapReadyC
             handler.postDelayed(runnable, 5000);
         }
 
+     /**
+     * Return to boundaries view
+     * enables to give new boundaries
+     * @param view
+     */
 
     public void returnToBounds(View view) {
         Intent intent = new Intent(getApplicationContext(),BoundariesActivity.class);

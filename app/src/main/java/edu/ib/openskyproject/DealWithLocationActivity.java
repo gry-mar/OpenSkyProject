@@ -28,7 +28,6 @@ import java.util.Locale;
  * Activity class which gets the coordinates from user and retrieve any state vector
  */
 
-
 public class DealWithLocationActivity extends AppCompatActivity {
 
     protected FusedLocationProviderClient fusedLocationProviderClient;

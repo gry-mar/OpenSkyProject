@@ -14,11 +14,21 @@ import android.widget.TextView;
 
 public class ShowPlaneActivity extends AppCompatActivity {
 
+    /**
+     * method called when activity initialization
+     * @param savedInstanceState
+     */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_plane);
     }
+
+    /**
+     * method which visualizes the plane in an actual localization
+     * @param view
+     */
 
     public void showPlayCLicked(View view) {
 
