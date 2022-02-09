@@ -20,7 +20,7 @@ import com.google.gson.GsonBuilder;
 import java.util.ArrayList;
 
 /**
- * Class which
+ * Class which enables to find and represent flights on the map in specify boundaries
  */
 
 
