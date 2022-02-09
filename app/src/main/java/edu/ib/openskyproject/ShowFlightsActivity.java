@@ -5,7 +5,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -19,6 +22,7 @@ import com.android.volley.toolbox.Volley;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -91,7 +95,7 @@ public class ShowFlightsActivity extends FragmentActivity implements OnMapReadyC
                                     LatLng point = new LatLng(flightsArrayList.get(i).getLatitude(),
                                             flightsArrayList.get(i).getLongitude());
                                     MarkerOptions markerOptions = new MarkerOptions().position(point).title("Origin country: " +
-                                            countriesList.get(i));
+                                            countriesList.get(i)).icon(BitmapDescriptorFactory.fromResource(R.drawable.plane_icon));
                                     mMap.addMarker(markerOptions);
 
                                 }
@@ -99,7 +103,11 @@ public class ShowFlightsActivity extends FragmentActivity implements OnMapReadyC
                                 //System.out.println(result);
                             }catch(Exception e){
                                 LatLng pointPWR = new LatLng(51.1052862455, 17.055921443);
-                                MarkerOptions moPWR = new MarkerOptions().position(pointPWR).title("No flights for that bounds but enjoy PWR :)");
+//                                @SuppressLint("UseCompatLoadingForDrawables") BitmapDrawable bitmapDrawable = (BitmapDrawable)getResources().getDrawable(R.drawable.clown);
+//                                Bitmap b = bitmapDrawable.getBitmap();
+//                                Bitmap smallMarker = Bitmap.createScaledBitmap(b,55,55,false);
+                                MarkerOptions moPWR = new MarkerOptions().position(pointPWR).title("No flights for that bounds but enjoy PWR :)")
+                                .icon(BitmapDescriptorFactory.fromResource(R.drawable.clown));
                                 googleMap.addMarker(moPWR); }
                             }, error -> {
                         System.out.println("Error");

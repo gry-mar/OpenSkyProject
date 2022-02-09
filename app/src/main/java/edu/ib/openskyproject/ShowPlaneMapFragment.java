@@ -3,6 +3,10 @@ package edu.ib.openskyproject;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import android.annotation.SuppressLint;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -15,12 +19,18 @@ import com.android.volley.toolbox.Volley;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
+
+/**
+ * Map fragment to place flight with specified icao24 number
+ * (see ShowPlaneActivity)
+ */
 
 public class ShowPlaneMapFragment extends Fragment {
 
@@ -58,11 +68,15 @@ public class ShowPlaneMapFragment extends Fragment {
                                    LatLng point = new LatLng(latitude, longtitude);
                                    System.out.println(longtitude);
                                    System.out.println(latitude);
-                                   MarkerOptions markerOptions = new MarkerOptions().position(point);
+                                   MarkerOptions markerOptions = new MarkerOptions().position(point)
+                                           .icon(BitmapDescriptorFactory.fromResource(R.drawable.plane_icon));
                                    googleMap.addMarker(markerOptions);
                                }catch(Exception e){
                                    LatLng pointPWR = new LatLng(51.1052862455, 17.055921443);
-                                   MarkerOptions moPWR = new MarkerOptions().position(pointPWR).title("Nie ma takiego lotu ale masz tu PWR");
+
+
+                                   MarkerOptions moPWR = new MarkerOptions().position(pointPWR).title("No such flights but enjoy PWR")
+                                           .icon(BitmapDescriptorFactory.fromResource(R.drawable.clown));
                                    googleMap.addMarker(moPWR);
                                }
                             }, error -> {

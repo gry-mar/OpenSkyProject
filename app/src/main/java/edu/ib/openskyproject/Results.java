@@ -2,6 +2,9 @@ package edu.ib.openskyproject;
 
 import java.util.ArrayList;
 
+/**
+ * class to map results (time, state) from api
+ */
 public class Results {
 
     protected int time;

@@ -40,11 +40,9 @@ public class DealWithLocationActivity extends AppCompatActivity {
     protected LocationListener locationListener;
     protected FusedLocationProviderClient fusedLocationProviderClient;
     protected Context context;
-    String lat;
-    String provider;
+
     protected double latitude;
     protected double longitude;
-    protected boolean gps_enabled, network_enabled;
 
     public double getLatitude() {
         return latitude;
@@ -68,7 +66,6 @@ public class DealWithLocationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_deal_with_location);
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
-        //locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(DealWithLocationActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(DealWithLocationActivity.this,
@@ -95,8 +92,6 @@ public class DealWithLocationActivity extends AppCompatActivity {
                 }
             }
         });
-//        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, LOCATION_REFRESH_TIME,
-//                LOCATION_REFRESH_DISTANCE, mLocationListener);
         Button btnDistance = findViewById(R.id.btnChooseDistance);
         btnDistance.setOnClickListener(this::mapDisplay);
     }
@@ -131,60 +126,29 @@ public class DealWithLocationActivity extends AppCompatActivity {
         }
     }
 
-    //private double distanceToLatAndLong(double distance){
 
-
-//    private final LocationListener mLocationListener = new LocationListener() {
-//        @Override
-//        public void onLocationChanged(final Location location) {
-//            setLatitude(location.getLatitude());
-//            setLongitude(location.getLongitude());
-//        }
-//    };
-//    @Override
-//    public void onLocationChanged(@NonNull Location location) {
-//        setLatitude(location.getLatitude());
-//        setLongitude(location.getLongitude());
-//        //this.latitude = location.getLatitude();
-//        //this.longitude = location.getLongitude();
-//    }
-//    @Override
-//    public void onProviderDisabled(String provider) {
-//        Log.d("Latitude","disable");
-//    }
-//
-//    @Override
-//    public void onProviderEnabled(String provider) {
-//        Log.d("Latitude","enable");
-//    }
-//
-//    @Override
-//    public void onStatusChanged(String provider, int status, Bundle extras) {
-//        Log.d("Latitude","status");
-//    }
 
     private void mapDisplay(View view) {
         EditText distanceText = findViewById(R.id.edtDistance);
-        double distance = Double.parseDouble(distanceText.getText().toString());
-        double decimalDegLat = degreeOfLat(distance);
-        double decimalDegLon = degreeOfLon(distance, decimalDegLat);
-        String url = "https://opensky-network.org/api/states/all?lamin=" + (getLatitude() - decimalDegLat)
-                + "&lomin=" + (getLongitude() - decimalDegLon) + "&lamax=" +
-                (getLatitude() + decimalDegLat) + "&lomax=" + (getLongitude() + decimalDegLon);
+        try {
+            double distance = Double.parseDouble(distanceText.getText().toString());
+            double decimalDegLat = degreeOfLat(distance);
+            double decimalDegLon = degreeOfLon(distance, decimalDegLat);
+            String url = "https://opensky-network.org/api/states/all?lamin=" + (getLatitude() - decimalDegLat)
+                    + "&lomin=" + (getLongitude() - decimalDegLon) + "&lamax=" +
+                    (getLatitude() + decimalDegLat) + "&lomax=" + (getLongitude() + decimalDegLon);
 
-        Bundle bundle = new Bundle();
-        bundle.putString("url", url);
-        MapsFragment mapsFragment = new MapsFragment();
-        mapsFragment.setArguments(bundle);
-        System.out.println(getLongitude());
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.fragmentContainerMap, mapsFragment).commit();
-
-//        fragmentManager.beginTransaction()
-//                .replace(R.id.fragmentContainerMap, MapsFragment.class, bundle, "tag")
-//                .setReorderingAllowed(true)
-//                .addToBackStack("name")
-//                .commit();
+            Bundle bundle = new Bundle();
+            bundle.putString("url", url);
+            MapsFragment mapsFragment = new MapsFragment();
+            mapsFragment.setArguments(bundle);
+            System.out.println(getLongitude());
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.fragmentContainerMap, mapsFragment).commit();
+        }catch(Exception e){
+            TextView tv = findViewById(R.id.tvDistanceError);
+            tv.setText("Enter distance");
+        }
     }
 
     public void returnMain(View view) {

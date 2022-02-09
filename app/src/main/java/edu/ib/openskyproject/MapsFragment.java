@@ -6,7 +6,10 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
@@ -23,6 +26,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -82,14 +86,16 @@ public class MapsFragment extends Fragment {
                                         LatLng point = new LatLng(flightsArrayList.get(i).getLatitude(),
                                                 flightsArrayList.get(i).getLongitude());
                                         MarkerOptions markerOptions = new MarkerOptions().position(point).title("Origin country: " +
-                                                countriesList.get(i));
+                                                countriesList.get(i)).icon(BitmapDescriptorFactory.fromResource(R.drawable.plane_icon));
                                         googleMap.addMarker(markerOptions);
 
                                     }
                                 } catch (Exception e) {
                                         e.printStackTrace();
                                     LatLng pointPWR = new LatLng(51.1052862455, 17.055921443);
-                                    MarkerOptions moPWR = new MarkerOptions().position(pointPWR).title("Nie ma lotów ale masz tu PWR");
+
+                                    MarkerOptions moPWR = new MarkerOptions().position(pointPWR).title("No such flights for now, enjoy PWR")
+                                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.clown));
                                     googleMap.addMarker(moPWR);
                                     }
 

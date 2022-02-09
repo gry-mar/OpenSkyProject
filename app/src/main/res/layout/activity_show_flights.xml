@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:map="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
@@ -8,20 +9,20 @@
     android:orientation="vertical"
 
     >
+
     <fragment
-        xmlns:map="http://schemas.android.com/apk/res-auto"
         android:id="@+id/googlemap"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
-        android:layout_height="400dp"/>
+        android:layout_height="423dp" />
 
     <Button
         android:id="@+id/btnreturnToBoundaries"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="@string/return_to_boundaries"
-        android:onClick="returnToBounds"/>
+        android:onClick="returnToBounds"
+        android:text="@string/return_to_boundaries" />
 
 </LinearLayout>
 

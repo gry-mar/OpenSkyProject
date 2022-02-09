@@ -1,7 +1,10 @@
 package edu.ib.openskyproject;
 
-import java.util.List;
 
+/**
+ * class that gets icso24 number, latitude and longitude from states vector
+ * (see Results.class)
+ */
 public class Flights {
 
     private String icao24;

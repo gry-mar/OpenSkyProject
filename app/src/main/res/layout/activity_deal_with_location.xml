@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
-            android:hint="Enter distance (km)"
+            android:hint="@string/enter_distance_km"
             android:inputType="numberDecimal"
              />
 
@@ -28,7 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Choose distance"
+            android:text="@string/choose_distance"
             />
 
 
@@ -43,14 +43,15 @@
             android:id="@+id/btnReturnToMain"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Return to main"
+            android:text="@string/return_to_main"
             android:onClick="returnMain"/>
 
+
         <TextView
-            android:id="@+id/tvErrorLocation"
+            android:id="@+id/tvDistanceError"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-             />
+            android:text="" />
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/fragmentContainerMap"

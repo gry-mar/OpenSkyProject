@@ -2,6 +2,9 @@ package edu.ib.openskyproject;
 
 import java.util.ArrayList;
 
+/**
+ * class to map results from API when searching by icao24
+ */
 public class Result2 {
     protected String icao;
     protected ArrayList<ArrayList> path;
