@@ -2,12 +2,15 @@ package edu.ib.openskyproject;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+
+/**
+ * Activity class which uses with specify icao24 number and represent a flight on map
+ */
 
 public class ShowPlaneActivity extends AppCompatActivity {
 
@@ -36,6 +39,12 @@ public class ShowPlaneActivity extends AppCompatActivity {
             error.setText("Enter icao24");
         }
     }
+
+    /**
+     * Return to main screen button
+     * enables to come back directly to main app window
+     * @param view
+     */
 
     public void btnReturnToMain(View view) {
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
