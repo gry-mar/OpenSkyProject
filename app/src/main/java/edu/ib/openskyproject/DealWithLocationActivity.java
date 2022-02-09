@@ -34,10 +34,7 @@ import java.util.Locale;
 
 
 public class DealWithLocationActivity extends AppCompatActivity {
-    private static final long LOCATION_REFRESH_TIME = 150000;
-    private static final float LOCATION_REFRESH_DISTANCE = 500;
-    protected LocationManager locationManager;
-    protected LocationListener locationListener;
+
     protected FusedLocationProviderClient fusedLocationProviderClient;
     protected Context context;
 
@@ -80,8 +77,7 @@ public class DealWithLocationActivity extends AppCompatActivity {
                         Geocoder geocoder = new Geocoder(DealWithLocationActivity.this,
                                 Locale.getDefault());
                         List<Address> addresses = geocoder.getFromLocation(
-                                location.getLatitude(), location.getLongitude(), 1
-                        );
+                                location.getLatitude(), location.getLongitude(), 1);
                         setLatitude(addresses.get(0).getLatitude());
                         setLongitude(addresses.get(0).getLongitude());
                         System.out.println(addresses.get(0).getLatitude());

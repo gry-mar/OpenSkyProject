@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 public class ShowPlaneActivity extends AppCompatActivity {
 
@@ -20,7 +21,7 @@ public class ShowPlaneActivity extends AppCompatActivity {
 
         EditText icao24 = findViewById(R.id.edtIcao24);
         String icao = icao24.getText().toString();
-
+        if(icao != null){
         String url = "https://opensky-network.org/api/states/all?icao24=" + icao;
         Bundle bundle = new Bundle();
         bundle.putString("plane_url",url);
@@ -29,7 +30,11 @@ public class ShowPlaneActivity extends AppCompatActivity {
         spmf.setArguments(bundle);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.fragmentContainerView,spmf).commit();
+        fragmentManager.beginTransaction().replace(R.id.fragmentContainerView,spmf).commit();}
+        else{
+            TextView error = findViewById(R.id.tvPlaneError);
+            error.setText("Enter icao24");
+        }
     }
 
     public void btnReturnToMain(View view) {
