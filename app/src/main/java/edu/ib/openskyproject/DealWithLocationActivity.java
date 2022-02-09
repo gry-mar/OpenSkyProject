@@ -53,6 +53,10 @@ public class DealWithLocationActivity extends AppCompatActivity {
         this.longitude = longitude;
     }
 
+    /**
+     * method called when initialize
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -130,7 +134,9 @@ public class DealWithLocationActivity extends AppCompatActivity {
     }
 
     /**
-     *
+     * method that parse text from text view
+     * and initializes map when parsing correct
+     * also passes url to map fragment
      * @param view
      */
 

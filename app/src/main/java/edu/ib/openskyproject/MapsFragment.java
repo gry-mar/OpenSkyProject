@@ -22,6 +22,9 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.util.ArrayList;
 
+/**
+ * Map  fragment connected with activity DealWithLocation
+ */
 public class MapsFragment extends Fragment {
 
 
@@ -36,6 +39,10 @@ public class MapsFragment extends Fragment {
     }
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
 
+        /**
+         * Method that places planes on map when map is ready
+         * @param googleMap
+         */
         @Override
         public void onMapReady(GoogleMap googleMap) {
 
@@ -102,6 +109,13 @@ public class MapsFragment extends Fragment {
         }
     };
 
+    /**
+     * method called when map initializes
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater,
@@ -117,6 +131,11 @@ public class MapsFragment extends Fragment {
 return view;
     }
 
+    /**
+     * method called right after onCreateView
+     * @param view
+     * @param savedInstanceState
+     */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);

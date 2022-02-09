@@ -34,7 +34,6 @@ import java.util.ArrayList;
 public class ShowFlightsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-   // private ActivityShowFlightsBinding binding;
     private boolean isReady;
 
     @Override
@@ -99,12 +98,8 @@ public class ShowFlightsActivity extends FragmentActivity implements OnMapReadyC
 
                                 }
 
-                                //System.out.println(result);
                             }catch(Exception e){
                                 LatLng pointPWR = new LatLng(51.1052862455, 17.055921443);
-//                                @SuppressLint("UseCompatLoadingForDrawables") BitmapDrawable bitmapDrawable = (BitmapDrawable)getResources().getDrawable(R.drawable.clown);
-//                                Bitmap b = bitmapDrawable.getBitmap();
-//                                Bitmap smallMarker = Bitmap.createScaledBitmap(b,55,55,false);
                                 MarkerOptions moPWR = new MarkerOptions().position(pointPWR).title("No flights for that bounds but enjoy PWR :)")
                                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.clown));
                                 googleMap.addMarker(moPWR); }

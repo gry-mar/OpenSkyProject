@@ -15,6 +15,11 @@ import android.widget.TextView;
  */
 public class BoundariesActivity extends AppCompatActivity {
 
+
+    /**
+     * method called when activity initialization
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

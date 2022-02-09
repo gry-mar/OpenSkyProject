@@ -44,8 +44,13 @@ public class ShowPlaneMapFragment extends Fragment {
         return url;
     }
 
-    private OnMapReadyCallback callback = new OnMapReadyCallback() {
 
+    private OnMapReadyCallback callback = new OnMapReadyCallback() {
+        /**
+         * method called when map is ready
+         * places appropriate icons on map
+         * @param googleMap
+         */
         @Override
         public void onMapReady(GoogleMap googleMap) {
 
@@ -91,6 +96,13 @@ public class ShowPlaneMapFragment extends Fragment {
         }
     };
 
+    /**
+     * method that is called when activity initialization
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -102,6 +114,11 @@ public class ShowPlaneMapFragment extends Fragment {
         return view;
     }
 
+    /**
+     * methode called immediately after onCreatedView
+     * @param view
+     * @param savedInstanceState
+     */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);

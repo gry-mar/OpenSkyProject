@@ -14,6 +14,10 @@ import java.util.Map;
  */
 public class MainActivity extends AppCompatActivity {
 
+    /**
+     * method called when app initializes
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
