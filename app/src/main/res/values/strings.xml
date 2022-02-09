@@ -22,4 +22,5 @@
     <string name="choose_distance">Choose distance</string>
     <string name="enter_distance_km">Enter distance (km)</string>
     <string name="return_to_main">Return to main</string>
+    <string name="open_clownsky">Open Clownsky</string>
 </resources>
